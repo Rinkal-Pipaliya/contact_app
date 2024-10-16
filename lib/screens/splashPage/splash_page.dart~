@@ -1,0 +1,36 @@
+import 'dart:async';
+
+import 'package:contact_app/routes/routes.dart';
+import 'package:contact_app/utils/share_helper.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    void initState() {
+      ShareHelper shr = ShareHelper();
+      shr.readIntrostatus().then((value) {
+        if (value == true) {
+          Timer.periodic(const Duration(seconds: 3), (timer) {
+            Navigator.pushReplacementNamed(context, AppRoutes.homePage);
+          });
+        } else {
+          Timer.periodic(const Duration(seconds: 3), (timer) {
+            Navigator.pushReplacementNamed(context, AppRoutes.introPage);
+          });
+        }
+      });
+    }
+
+    return Scaffold(
+      body: Center(
+        child: kIsWeb
+            ? Image.network("lib/assets/gif/Contact.gif")
+            : Image.asset("lib/assets/gif/Contact.gif"),
+      ),
+    );
+  }
+}
